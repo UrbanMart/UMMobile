@@ -1,26 +1,78 @@
 package com.example.urbanmart.ui;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.urbanmart.R;
+import com.example.urbanmart.adapter.ProductAdapter;
+import com.example.urbanmart.model.Product;
+import com.example.urbanmart.network.ApiService;
+import com.google.gson.Gson;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private TextView welcomeTextView;
+    private RecyclerView productRecyclerView;
+    private ApiService apiService;
+    private Gson gson;
+    private TextView userNameTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        welcomeTextView = findViewById(R.id.welcomeTextView);
+        // Initialize views
+        productRecyclerView = findViewById(R.id.productRecyclerView);
+        userNameTextView = findViewById(R.id.userNameTextView);
 
-        // Get the username passed from the LoginActivity
-        String userName = getIntent().getStringExtra("USER_NAME");
+        apiService = new ApiService(this);
+        gson = new Gson();
 
-        // Display the username
-        welcomeTextView.setText("Welcome, " + userName + "!");
+        // Retrieve user details from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("UrbanMartPrefs", MODE_PRIVATE);
+        String userName = sharedPreferences.getString("userName", "User");
+        userNameTextView.setText("Welcome, " + userName);
+
+        // Set up RecyclerView with GridLayoutManager
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2); // 2 columns
+        productRecyclerView.setLayoutManager(gridLayoutManager);
+
+        // Load products
+        loadProducts();
+    }
+
+    private void loadProducts() {
+        apiService.fetchProducts(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                // Handle failure
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseBody = response.body().string();
+                    Product[] products = gson.fromJson(responseBody, Product[].class);
+                    List<Product> productList = Arrays.asList(products);
+
+                    runOnUiThread(() -> {
+                        ProductAdapter adapter = new ProductAdapter(productList);
+                        productRecyclerView.setAdapter(adapter);
+                    });
+                }
+            }
+        });
     }
 }
