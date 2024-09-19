@@ -38,5 +38,9 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 
     implementation ("com.squareup.okhttp3:okhttp:4.9.1")
+    implementation ("com.google.code.gson:gson:2.8.6")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
+
 
 }
