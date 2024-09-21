@@ -2,9 +2,8 @@ package com.example.urbanmart.network;
 
 import android.content.Context;
 
-import com.example.urbanmart.model.User;
 import com.google.gson.Gson;
-import okhttp3.Call;
+import com.example.urbanmart.model.User;
 import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -54,6 +53,45 @@ public class ApiService {
     }
 
     /**
+     * Sign up a new user by making a POST request
+     *
+     * @param user     The user object containing name, email, and password
+     * @param callback Callback to handle response or failure
+     */
+    public void signUpUser(User user, Callback callback) {
+        String json = gson.toJson(user);
+
+        RequestBody body = RequestBody.create(json, JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + "Users")
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    /**
+     * Update user profile by making a PUT request
+     *
+     * @param userId   The user ID to update
+     * @param user     The user object containing updated data
+     * @param callback Callback to handle response or failure
+     */
+    public void updateUserProfile(String userId, User user, Callback callback) {
+        String json = gson.toJson(user);
+
+        RequestBody body = RequestBody.create(json, JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + "Users/" + userId)
+                .put(body)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    /**
      * Fetch list of products from the API
      *
      * @param callback Callback to handle response or failure
@@ -70,7 +108,7 @@ public class ApiService {
     /**
      * Inner class to represent a user login request body
      */
-    class UserLoginRequest {
+    static class UserLoginRequest {
         String email;
         String password;
 

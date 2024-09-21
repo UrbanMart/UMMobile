@@ -1,5 +1,6 @@
 package com.example.urbanmart.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
@@ -45,6 +46,9 @@ public class HomeActivity extends AppCompatActivity {
         String userName = sharedPreferences.getString("userName", "User");
         userNameTextView.setText("Welcome, " + userName);
 
+        // Set OnClickListener for userNameTextView
+        userNameTextView.setOnClickListener(v -> goToUpdateActivity()); // Add this line
+
         // Set up RecyclerView with GridLayoutManager
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2); // 2 columns
         productRecyclerView.setLayoutManager(gridLayoutManager);
@@ -52,6 +56,12 @@ public class HomeActivity extends AppCompatActivity {
         // Load products
         loadProducts();
     }
+
+    private void goToUpdateActivity() {
+        Intent intent = new Intent(HomeActivity.this, UpdateProfileActivity.class);
+        startActivity(intent);
+    }
+
 
     private void loadProducts() {
         apiService.fetchProducts(new Callback() {

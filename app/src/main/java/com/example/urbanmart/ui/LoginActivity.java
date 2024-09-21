@@ -22,7 +22,6 @@ import java.io.IOException;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailEditText, passwordEditText;
-    private Button loginButton;
     private ApiService apiService;
     private Gson gson;
 
@@ -33,11 +32,17 @@ public class LoginActivity extends AppCompatActivity {
 
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
-        loginButton = findViewById(R.id.loginButton);
+        Button loginButton = findViewById(R.id.loginButton);
+        Button signupButton = findViewById(R.id.signupButton);
 
         apiService = new ApiService(this);  // Pass context for saving session
         gson = new Gson();
-
+        signupButton.setOnClickListener(new View.OnClickListener() {  // Add this block
+            @Override
+            public void onClick(View v) {
+                goToSignupPage();  // Navigate to SignupActivity
+            }
+        });
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +91,9 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("userId", user.getId());
         editor.putString("userName", user.getName());
         editor.putString("userEmail", user.getEmail());
-        editor.putBoolean("isActive", user.isActive());
+        editor.putBoolean("isActive", user.getIsActive());
+        editor.putString("password", user.getPassword());
+        editor.putString("role", user.getRole());
         editor.apply();  // Apply changes
     }
 
@@ -95,5 +102,9 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
         startActivity(intent);
         finish();  // Close the LoginActivity
+    }
+    private void goToSignupPage() {
+        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+        startActivity(intent);
     }
 }
