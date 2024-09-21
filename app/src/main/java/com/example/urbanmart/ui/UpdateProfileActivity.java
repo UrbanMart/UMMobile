@@ -7,20 +7,27 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import com.example.urbanmart.R;
 import com.example.urbanmart.model.User;
 import com.example.urbanmart.network.ApiService;
 import com.google.gson.Gson;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
 import java.io.IOException;
 
 public class UpdateProfileActivity extends AppCompatActivity {
 
-    private EditText nameEditText, emailEditText;
-    private Button updateProfileButton;
+    private EditText usernameEditText, emailEditText, passwordEditText;
+    private Button updateButton;
     private ApiService apiService;
     private Gson gson;
     private String userId;
@@ -30,69 +37,65 @@ public class UpdateProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
 
-        nameEditText = findViewById(R.id.nameEditText);
+        // Apply system window insets for edge-to-edge layout
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        usernameEditText = findViewById(R.id.usernameEditText);
         emailEditText = findViewById(R.id.emailEditText);
-        updateProfileButton = findViewById(R.id.updateProfileButton);
+        passwordEditText = findViewById(R.id.passwordEditText);
+        updateButton = findViewById(R.id.updateButton);
 
         apiService = new ApiService(this);
         gson = new Gson();
 
-        // Load user info from SharedPreferences
+        // Get user info from SharedPreferences (for example)
         SharedPreferences sharedPreferences = getSharedPreferences("UrbanMartPrefs", MODE_PRIVATE);
-        userId = sharedPreferences.getString("userId", null);
+        userId = sharedPreferences.getString("userId", "");
         String userName = sharedPreferences.getString("userName", "");
         String userEmail = sharedPreferences.getString("userEmail", "");
 
-        // Populate fields with user data
-        nameEditText.setText(userName);
+        // Pre-fill the current user data
+        usernameEditText.setText(userName);
         emailEditText.setText(userEmail);
 
-        updateProfileButton.setOnClickListener(new View.OnClickListener() {
+        updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String updatedName = nameEditText.getText().toString();
-                String updatedEmail = emailEditText.getText().toString();
+                String updatedUsername = usernameEditText.getText().toString().trim();
+                String updatedEmail = emailEditText.getText().toString().trim();
+                String updatedPassword = passwordEditText.getText().toString().trim();
 
-                // Basic validation
-                if (updatedName.isEmpty() || updatedEmail.isEmpty()) {
-                    Toast.makeText(UpdateProfileActivity.this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+                if (updatedUsername.isEmpty() || updatedEmail.isEmpty() || updatedPassword.isEmpty()) {
+                    Toast.makeText(UpdateProfileActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 } else {
-                    updateUserProfile(userId, updatedName, updatedEmail);
+                    updateUserProfile(userId, updatedUsername, updatedEmail, updatedPassword);
                 }
             }
         });
+
     }
 
-    private void updateUserProfile(String userId, String name, String email) {
-        User updatedUser = new User(name, email);
+    private void updateUserProfile(String userId, String name, String email, String password) {
+        User updatedUser = new User(name, email, password);
         apiService.updateUserProfile(userId, updatedUser, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("UpdateProfileActivity", "Profile update failed", e);
+                Log.e("UpdateProfileActivity", "Update request failed", e);
                 runOnUiThread(() -> Toast.makeText(UpdateProfileActivity.this, "Profile update failed", Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    runOnUiThread(() -> {
-                        Toast.makeText(UpdateProfileActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
-                        // Optionally, update SharedPreferences with the new info
-                        saveUpdatedUserInfo(name, email);
-                    });
+                    runOnUiThread(() -> Toast.makeText(UpdateProfileActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show());
                 } else {
-                    runOnUiThread(() -> Toast.makeText(UpdateProfileActivity.this, "Profile update failed", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(UpdateProfileActivity.this, "Update failed", Toast.LENGTH_SHORT).show());
                 }
             }
         });
-    }
-
-    // Save updated user info in SharedPreferences
-    private void saveUpdatedUserInfo(String name, String email) {
-        SharedPreferences sharedPreferences = getSharedPreferences("UrbanMartPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("userName", name);
-        editor.putString("userEmail", email);
-        editor.apply();
     }
 }

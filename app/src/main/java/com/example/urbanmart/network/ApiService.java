@@ -2,9 +2,8 @@ package com.example.urbanmart.network;
 
 import android.content.Context;
 
-import com.example.urbanmart.model.User;
 import com.google.gson.Gson;
-import okhttp3.Call;
+
 import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -52,6 +51,7 @@ public class ApiService {
 
         client.newCall(request).enqueue(callback);
     }
+
     /**
      * Sign up a new user by making a POST request
      *
@@ -70,6 +70,7 @@ public class ApiService {
 
         client.newCall(request).enqueue(callback);
     }
+
     /**
      * Update user profile by making a PUT request
      *
@@ -115,5 +116,8 @@ public class ApiService {
             this.email = email;
             this.password = password;
         }
+    }
+
+    private class User {
     }
 }
