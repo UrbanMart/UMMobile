@@ -33,6 +33,7 @@ public class SignUpActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         signUpButton = findViewById(R.id.signUpButton);
+        Button loginButton = findViewById(R.id.loginButton);
 
         apiService = new ApiService(this);
         gson = new Gson();
@@ -41,21 +42,29 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = nameEditText.getText().toString();
+                String role = "Customer";
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
+                Boolean isActive = false;
 
                 // Basic validation
                 if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(SignUpActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 } else {
-                    signUpUser(name, email, password);
+                    signUpUser(name,role, email, password,isActive);
                 }
+            }
+        });
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToLoginPage();  // Navigate to LoginActivity
             }
         });
     }
 
-    private void signUpUser(String name, String email, String password) {
-        User newUser = new User(name, email);
+    private void signUpUser(String name,String role, String email, String password, Boolean isActive) {
+        User newUser = new User(name,role, email,password, isActive);
         apiService.signUpUser(newUser, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

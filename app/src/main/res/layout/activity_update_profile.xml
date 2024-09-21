@@ -2,8 +2,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical"
-    android:background="#ACC9E2"
     android:padding="16dp">
 
     <EditText
@@ -34,5 +34,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="Update Profile" />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Logout" />
+
 
 </LinearLayout>

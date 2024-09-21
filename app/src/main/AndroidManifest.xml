@@ -18,16 +18,17 @@
         <activity
             android:name=".ui.UpdateProfileActivity"
             android:exported="false" />
-        <!-- <activity -->
-        <!-- android:name=".ui.SignUpActivity" -->
-        <!-- android:exported="false" /> -->
+         <activity
+         android:name=".ui.SignUpActivity"
+         android:exported="false" />
         <activity
             android:name=".ui.HomeActivity"
-            android:exported="false" /> <!-- <activity -->
+            android:exported="false" />
+        <!-- <activity -->
         <!-- android:name=".ui.LoginActivity" -->
         <!-- android:exported="false" /> -->
         <activity
-            android:name=".ui.SignUpActivity"
+            android:name=".ui.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

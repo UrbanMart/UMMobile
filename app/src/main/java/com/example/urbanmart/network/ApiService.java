@@ -3,7 +3,7 @@ package com.example.urbanmart.network;
 import android.content.Context;
 
 import com.google.gson.Gson;
-
+import com.example.urbanmart.model.User;
 import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -108,7 +108,7 @@ public class ApiService {
     /**
      * Inner class to represent a user login request body
      */
-    class UserLoginRequest {
+    static class UserLoginRequest {
         String email;
         String password;
 
@@ -116,8 +116,5 @@ public class ApiService {
             this.email = email;
             this.password = password;
         }
-    }
-
-    private class User {
     }
 }
