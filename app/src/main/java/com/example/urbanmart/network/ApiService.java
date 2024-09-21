@@ -70,6 +70,25 @@ public class ApiService {
 
         client.newCall(request).enqueue(callback);
     }
+    /**
+     * Update user profile by making a PUT request
+     *
+     * @param userId   The user ID to update
+     * @param user     The user object containing updated data
+     * @param callback Callback to handle response or failure
+     */
+    public void updateUserProfile(String userId, User user, Callback callback) {
+        String json = gson.toJson(user);
+
+        RequestBody body = RequestBody.create(json, JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + "Users/" + userId)
+                .put(body)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
 
     /**
      * Fetch list of products from the API

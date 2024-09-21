@@ -55,7 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void signUpUser(String name, String email, String password) {
-        User newUser = new User(name, email, password);
+        User newUser = new User(name, email);
         apiService.signUpUser(newUser, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
