@@ -1,10 +1,18 @@
 package com.example.urbanmart.model;
-
 public class User {
     private String id;
     private String email;
+    private String password;
     private String name;
-    private boolean isActive;
+    private String role = "Customer"; // Default role
+    private boolean isActive = true;  // Default active status
+
+    // Constructor for SignUp
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
     // Getters
     public String getId() {

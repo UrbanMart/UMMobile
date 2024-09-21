@@ -52,6 +52,24 @@ public class ApiService {
 
         client.newCall(request).enqueue(callback);
     }
+    /**
+     * Sign up a new user by making a POST request
+     *
+     * @param user     The user object containing name, email, and password
+     * @param callback Callback to handle response or failure
+     */
+    public void signUpUser(User user, Callback callback) {
+        String json = gson.toJson(user);
+
+        RequestBody body = RequestBody.create(json, JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + "Users")
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
 
     /**
      * Fetch list of products from the API
