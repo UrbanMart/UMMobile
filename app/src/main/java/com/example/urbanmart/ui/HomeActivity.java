@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void goToUpdateActivity() {
-        Intent intent = new Intent(HomeActivity.this, UpdateProfileActivity.class);
+        Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
         startActivity(intent);
     }
 
