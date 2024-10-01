@@ -6,17 +6,29 @@
     android:background="#CFE1F0"
     android:padding="16dp">
 
-    <!-- User name at the top -->
-    <TextView
-        android:id="@+id/userNameTextView"
-        android:layout_width="wrap_content"
+    <!-- User name and Cart icon -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome, User"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:focusable="true" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/userNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome, User"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <ImageView
+            android:id="@+id/cartIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/cart" />
+    </LinearLayout>
 
     <!-- RecyclerView for the products in a grid layout -->
     <androidx.recyclerview.widget.RecyclerView

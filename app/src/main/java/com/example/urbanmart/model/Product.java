@@ -7,6 +7,13 @@ public class Product {
     private String category;
     private String imageUrl;
 
+    public Product(String name, double price, String category, String imageUrl) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.imageUrl = imageUrl;
+    }
+
     // Getters and setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }

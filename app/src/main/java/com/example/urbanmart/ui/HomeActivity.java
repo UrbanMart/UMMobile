@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -28,11 +29,19 @@ public class HomeActivity extends AppCompatActivity {
     private ApiService apiService;
     private Gson gson;
     private TextView userNameTextView;
+    private ImageView cartIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        cartIcon = findViewById(R.id.cartIcon);
+
+        cartIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+            startActivity(intent);
+        });
 
         // Initialize views
         productRecyclerView = findViewById(R.id.productRecyclerView);
