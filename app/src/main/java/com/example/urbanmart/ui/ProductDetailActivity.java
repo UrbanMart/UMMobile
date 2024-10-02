@@ -48,7 +48,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         // Set product details to views
         productName.setText(name);
-        productPrice.setText(String.format("$%.2f", price));
+        productPrice.setText(String.format("LKR %.2f", price));
         productCategory.setText(category);
 
         // Load the product image or a placeholder if the URL is empty or null

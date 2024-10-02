@@ -26,6 +26,7 @@
         android:id="@+id/productPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
         android:text="Price"
         android:textColor="@color/design_default_color_on_secondary"
         android:textSize="18sp" />
@@ -36,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Category"
+        android:textColor="@color/design_default_color_on_secondary"
         android:textSize="16sp" />
 
     <!-- Quantity adjustment section -->
@@ -85,11 +87,10 @@
     <Button
         android:id="@+id/addToCartButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/black"
+        android:background="@drawable/rounded_button_background"
         android:text="Add to Cart"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
-
 </LinearLayout>

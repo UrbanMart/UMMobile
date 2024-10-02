@@ -10,42 +10,65 @@
         android:id="@+id/paymentHeaderTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Payment"
+        android:text="Payment Details"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
         android:paddingBottom="16dp"/>
 
-    <!-- Card Number input -->
-    <EditText
-        android:id="@+id/cardNumberEditText"
+    <!-- Spacer to push the header to the center -->
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Card Number"
-        android:inputType="number" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    <!-- Expiration Date input -->
-    <EditText
-        android:id="@+id/expirationDateEditText"
+    <!-- Payment details -->
+    <LinearLayout
+        android:id="@+id/paymentDetailsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="MM/YY"
-        android:inputType="date" />
+        android:orientation="vertical">
 
-    <!-- CVV input -->
-    <EditText
-        android:id="@+id/cvvEditText"
+        <!-- Card Number input -->
+        <EditText
+            android:id="@+id/cardNumberEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Card Number"
+            android:inputType="number" />
+
+        <!-- Expiration Date input -->
+        <EditText
+            android:id="@+id/expirationDateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="MM/YY"
+            android:inputType="date" />
+
+        <!-- CVV input -->
+        <EditText
+            android:id="@+id/cvvEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="CVV"
+            android:inputType="numberPassword"
+            android:maxLength="3" />
+    </LinearLayout>
+
+    <!-- Spacer to push the button to the bottom -->
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="CVV"
-        android:inputType="numberPassword"
-        android:maxLength="3" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <!-- Button to proceed with the payment -->
     <Button
         android:id="@+id/proceedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_button_background"
         android:text="Proceed"
-        android:layout_gravity="center_horizontal"/>
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 </LinearLayout>

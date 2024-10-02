@@ -39,7 +39,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         Product product = cartItems.get(position);
         holder.productNameTextView.setText(product.getName());
-        holder.productPriceTextView.setText(String.format("$%.2f", product.getPrice()));
+        holder.productPriceTextView.setText(String.format("LKR %.2f", product.getPrice()));
         holder.productQuantityTextView.setText("Quantity: " + product.getQuantity());
 
         // Load product image using Glide
@@ -87,7 +87,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         TextView productNameTextView;
         TextView productPriceTextView;
         TextView productQuantityTextView;
-        Button removeButton;
+        ImageView removeButton;
         ImageView productImageView;
 
         public CartViewHolder(@NonNull View itemView) {
@@ -96,7 +96,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             productNameTextView = itemView.findViewById(R.id.productNameTextView);
             productPriceTextView = itemView.findViewById(R.id.productPriceTextView);
             productQuantityTextView = itemView.findViewById(R.id.productQuantityTextView);
-            removeButton = itemView.findViewById(R.id.removeButton);
+            removeButton = itemView.findViewById(R.id.deleteIconImageView);
         }
     }
 }

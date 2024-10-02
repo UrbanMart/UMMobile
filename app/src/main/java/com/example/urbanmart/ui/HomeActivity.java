@@ -52,8 +52,6 @@ public class HomeActivity extends AppCompatActivity {
         apiService = new ApiService(this);
         gson = new Gson();
 
-        SharedPreferences sharedPreferences = getSharedPreferences("UrbanMartPrefs", MODE_PRIVATE);
-
         userImage.setOnClickListener(v -> goToUpdateActivity());
         cartIcon.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, CartActivity.class);

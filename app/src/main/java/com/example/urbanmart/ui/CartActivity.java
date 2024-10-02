@@ -51,7 +51,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartT
             List<Product> cart = gson.fromJson(cartJson, type);
 
             if (cart == null || cart.isEmpty()) {
-                checkoutButton.setText("Checkout - $0.00");
+                checkoutButton.setText("Checkout - LKR 0.00");
                 totalPrice = 0; // Reset total price
                 return;
             }
@@ -61,7 +61,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartT
                 totalPrice += product.getPrice(); // Calculate total price based on quantity
             }
 
-            checkoutButton.setText(String.format("Checkout - $%.2f", totalPrice)); // Update checkout button text
+            checkoutButton.setText(String.format("Checkout - LKR %.2f", totalPrice)); // Update checkout button text
 
             cartAdapter = new CartAdapter(cart, this, this);
             cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -124,7 +124,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartT
         editor.putString("cart", "[]");
         editor.apply();
         totalPrice = 0;
-        checkoutButton.setText("Checkout - $0.00");
+        checkoutButton.setText("Checkout - LKR 0.00");
         cartAdapter.notifyDataSetChanged(); // Notify adapter of changes
     }
 

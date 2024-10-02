@@ -1,5 +1,6 @@
 package com.example.urbanmart.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -56,7 +57,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
         // Get user info from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("UrbanMartPrefs", MODE_PRIVATE);
-        String userId = sharedPreferences.getString("userId", "");
+        userId = sharedPreferences.getString("userId", "");
         String userRole = sharedPreferences.getString("role", "");
         String userName = sharedPreferences.getString("userName", "");
         String userEmail = sharedPreferences.getString("userEmail", "");
@@ -100,8 +101,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         finish(); // Close the UpdateProfileActivity
     }
 
-
-    private void updateUserProfile(String userId, String name,String role, String email, String password, Boolean isActive) {
+    private void updateUserProfile(String userId, String name, String role, String email, String password, Boolean isActive) {
         User updatedUser = new User(userId, name, role, email, password, isActive);
         apiService.updateUserProfile(userId, updatedUser, new Callback() {
             @Override
@@ -115,6 +115,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     runOnUiThread(() -> {
                         Toast.makeText(UpdateProfileActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                        saveUserSession(updatedUser); // Save updated user data to cache
                         goToHomeActivity(); // Navigate to HomeActivity after success
                     });
                 } else {
@@ -128,5 +129,14 @@ public class UpdateProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(UpdateProfileActivity.this, HomeActivity.class);
         startActivity(intent);
         finish(); // Close the UpdateProfileActivity
+    }
+
+    private void saveUserSession(User user) {
+        SharedPreferences sharedPreferences = getSharedPreferences("UrbanMartPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("userName", user.getName());
+        editor.putString("userEmail", user.getEmail());
+        editor.putString("password", user.getPassword());
+        editor.apply();  // Apply changes
     }
 }
