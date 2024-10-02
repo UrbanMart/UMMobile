@@ -31,5 +31,6 @@
         android:layout_height="56dp"
         android:background="@drawable/rounded_button_background"
         android:layout_marginTop="16dp"
+        android:textSize="18sp"
         android:text="Checkout" />
 </LinearLayout>

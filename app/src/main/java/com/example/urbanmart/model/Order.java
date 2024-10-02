@@ -3,13 +3,15 @@ package com.example.urbanmart.model;
 import java.util.List;
 
 public class Order {
+    private String customerId; // New field for customer ID
     private String customerName;
     private String orderDate;
     private double totalAmount;
     private List<OrderItem> orderItems;
     private String status;
 
-    public Order(String customerName, String orderDate, double totalAmount, List<OrderItem> orderItems, String status) {
+    public Order(String customerId, String customerName, String orderDate, double totalAmount, List<OrderItem> orderItems, String status) {
+        this.customerId = customerId; // Initialize the new field
         this.customerName = customerName;
         this.orderDate = orderDate;
         this.totalAmount = totalAmount;
@@ -18,6 +20,10 @@ public class Order {
     }
 
     // Getters
+    public String getCustomerId() {
+        return customerId; // Getter for customer ID
+    }
+
     public String getCustomerName() {
         return customerName;
     }
@@ -39,6 +45,10 @@ public class Order {
     }
 
     // Setters
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId; // Setter for customer ID
+    }
+
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }

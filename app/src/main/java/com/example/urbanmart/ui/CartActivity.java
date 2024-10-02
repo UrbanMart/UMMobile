@@ -3,6 +3,7 @@ package com.example.urbanmart.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
@@ -77,6 +78,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartT
         SharedPreferences sharedPreferences = getSharedPreferences("UrbanMartPrefs", MODE_PRIVATE);
         String cartJson = sharedPreferences.getString("cart", "[]");
         String userName = sharedPreferences.getString("userName", "User");
+        String customerId = sharedPreferences.getString("userId", null);
 
         Gson gson = new Gson();
         Type type = new TypeToken<List<Product>>() {}.getType();
@@ -96,7 +98,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartT
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             orderDate = java.time.Instant.now().toString();
         }
-        Order order = new Order(userName, orderDate, totalPrice, orderItems, "Pending");
+        Order order = new Order(customerId, userName, orderDate, totalPrice, orderItems, "Pending");
 
         // Show confirmation dialog before finalizing the order
         new AlertDialog.Builder(this)
@@ -104,7 +106,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartT
                 .setMessage("Are you sure you want to place this order?")
                 .setPositiveButton("Yes", (dialog, which) -> {
                     String orderJson = gson.toJson(order);
-
+                    Log.d("OrderDetails", orderJson);
                     // Start PaymentActivity and pass the order JSON
                     Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
                     intent.putExtra("orderJson", orderJson);
@@ -123,13 +125,13 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartT
         editor.putString("cart", "[]");
         editor.apply();
         totalPrice = 0;
-        checkoutButton.setText("Checkout - LKR 0.00");
+        checkoutButton.setText("Checkout");
         cartAdapter.notifyDataSetChanged(); // Notify adapter of changes
     }
 
     @Override
     public void onTotalPriceUpdated(double amount) {
         totalPrice += amount;
-        checkoutButton.setText(String.format("Checkout - $%.2f", totalPrice)); // Update checkout button text
+        checkoutButton.setText(String.format("Checkout - LKR %.2f", totalPrice)); // Update checkout button text
     }
 }
