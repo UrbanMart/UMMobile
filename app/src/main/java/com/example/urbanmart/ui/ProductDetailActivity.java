@@ -3,8 +3,7 @@ package com.example.urbanmart.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -98,8 +97,10 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void addToCart(Product product) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPreferences = getSharedPreferences("UrbanMartPrefs", MODE_PRIVATE);
         String cartJson = sharedPreferences.getString("cart", "[]");
+
+        Log.d("SharedPreferencesDebug", "Cart JSON: " + cartJson); // Fix this line
 
         Gson gson = new Gson();
         Type type = new TypeToken<List<Product>>() {}.getType();
@@ -109,26 +110,28 @@ public class ProductDetailActivity extends AppCompatActivity {
             cart = new ArrayList<>(); // Initialize the cart if it's null
         }
 
-        boolean productExists = false; // Flag to check if the product exists
+        // Flag to check if the product exists
+        boolean productExists = false;
 
-        for (Product cartProduct : cart) {
-            if (cartProduct.getId().equals(product.getId())) { // Change to compare IDs
-                cartProduct.setPrice(cartProduct.getPrice() + (product.getPrice() * quantity)); // Update the price based on quantity
-                cartProduct.setQuantity(cartProduct.getQuantity() + quantity); // Update the quantity
+        for (int i = 0; i < cart.size(); i++) {
+            Product cartProduct = cart.get(i);
+            if (cartProduct.getId().equals(product.getId())) { // Compare product IDs
+                cart.remove(i); // Remove the existing product
                 productExists = true; // Set the flag to true
-                break; // Exit the loop since we found the product
+                break; // Exit the loop since we found and removed the product
             }
         }
 
-        if (!productExists) {
-            product.setQuantity(quantity); // Set the quantity for the new product
-            cart.add(product); // Add the new product to the cart if it doesn't exist
-        }
+        // Set the quantity for the new product
+        product.setQuantity(quantity);
+        // Add the new product to the cart
+        cart.add(product);
 
         // Save the updated cart back to SharedPreferences
         String updatedCartJson = gson.toJson(cart);
-        sharedPreferences.edit().putString("cart", updatedCartJson).apply(); // Apply the changes
+        sharedPreferences.edit().putString("cart", updatedCartJson).apply(); // Apply changes
     }
+
 
 
 }

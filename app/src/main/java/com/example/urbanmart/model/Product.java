@@ -15,7 +15,7 @@ public class Product {
         this.price = price;
         this.category = category;
         this.imageUrl = imageUrl;
-        this.quantity = 0; // Default value
+        this.quantity = 1; // Default value
     }
 
     // Getters and setters
