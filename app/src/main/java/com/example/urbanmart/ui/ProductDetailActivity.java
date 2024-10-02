@@ -1,5 +1,6 @@
 package com.example.urbanmart.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -7,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.urbanmart.R;
@@ -72,13 +75,18 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Set up the "Add to Cart" button click listener
         addToCartButton.setOnClickListener(v -> {
             // Create a new product object with the selected quantity
             Product product = new Product(name, price * quantity, category, imageUrl);
 
-            // Add the product to the cart
+            // Add the product to the cart and navigate to the cart
             addToCart(product);
+            Toast.makeText(this, "Product added to cart!", Toast.LENGTH_SHORT).show(); // Show toast message
+
+            // Start CartActivity
+            Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
+            startActivity(intent);
+            finish(); // Optionally, finish this activity if you don't want to return here
         });
     }
 
@@ -99,13 +107,15 @@ public class ProductDetailActivity extends AppCompatActivity {
         for (Product cartProduct : cart) {
             // Check if the product already exists in the cart (based on name or some unique identifier)
             if (cartProduct.getName().equals(product.getName())) {
-                cartProduct.setPrice(cartProduct.getPrice() + product.getPrice()); // Update the price by adding new price
+                cartProduct.setPrice(cartProduct.getPrice() + (product.getPrice() * quantity)); // Update the price based on quantity
+                cartProduct.setQuantity(cartProduct.getQuantity() + quantity); // Update the quantity
                 productExists = true; // Set the flag to true
                 break; // Exit the loop since we found the product
             }
         }
 
         if (!productExists) {
+            product.setQuantity(quantity); // Set the quantity for the new product
             cart.add(product); // Add the new product to the cart if it doesn't exist
         }
 

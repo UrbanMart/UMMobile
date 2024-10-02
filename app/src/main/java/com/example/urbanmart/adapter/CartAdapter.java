@@ -44,8 +44,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         Product product = cartItems.get(position);
 
         holder.productNameTextView.setText(product.getName());
-        holder.productPriceTextView.setText(String.format("$%.2f", product.getPrice()));
-        holder.productQuantityTextView.setText("Quantity: 1");
+        holder.productPriceTextView.setText(String.format("$%.2f", product.getPrice())); // Display the total price
+        holder.productQuantityTextView.setText("Quantity: " + product.getQuantity()); // Show actual quantity
 
         // Load product image using Glide
         Glide.with(context)
@@ -66,6 +66,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             updateCartInPreferences(cartItems);
         });
     }
+
 
     @Override
     public int getItemCount() {
