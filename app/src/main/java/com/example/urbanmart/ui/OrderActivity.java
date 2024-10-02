@@ -2,6 +2,7 @@ package com.example.urbanmart.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +30,7 @@ public class OrderActivity extends AppCompatActivity {
     private RecyclerView ordersRecyclerView;
     private OrderAdapter orderAdapter;
     private ApiService apiService;
-    private String customerName;
+    private String customerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class OrderActivity extends AppCompatActivity {
 
         // Get customerName from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("UrbanMartPrefs", MODE_PRIVATE);
-        customerName = sharedPreferences.getString("userName", "User");
+        customerId = sharedPreferences.getString("userId", null);
 
         ordersRecyclerView = findViewById(R.id.ordersRecyclerView);
         ordersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -66,7 +67,8 @@ public class OrderActivity extends AppCompatActivity {
                     // Filter orders by customerName
                     List<Order> filteredOrders = new ArrayList<>();
                     for (Order order : allOrders) {
-                        if (order.getCustomerName().equals(customerName)) {
+                        Log.d("CustomerId", order.getCustomerId());
+                        if (order.getCustomerId().equals(customerId)) {
                             filteredOrders.add(order);
                         }
                     }

@@ -3,7 +3,10 @@ package com.example.urbanmart.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -45,6 +48,58 @@ public class PaymentActivity extends AppCompatActivity {
             if (validateCardDetails()) {
                 // Perform the API call to post the order after successful validation
                 submitOrder();
+            }
+        });
+
+        // Add TextWatcher to handle expiration date input
+        expirationDateEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // No action needed before text changes
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // No action needed while text is changing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                // Add '/' after the month if the length is 2 and does not end with '/'
+                if (text.length() == 2 && !text.endsWith("/")) {
+                    text += "/";
+                    expirationDateEditText.setText(text);
+                    expirationDateEditText.setSelection(text.length()); // Move cursor to the end
+                }
+                // Limit to 5 characters (MM/YY)
+                if (text.length() > 5) {
+                    expirationDateEditText.setText(text.substring(0, 5));
+                    expirationDateEditText.setSelection(5);
+                }
+            }
+        });
+
+        // Limit card number input to 16 digits
+        cardNumberEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // No action needed before text changes
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // No action needed while text is changing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                // Limit to 16 digits
+                if (text.length() > 16) {
+                    cardNumberEditText.setText(text.substring(0, 16));
+                    cardNumberEditText.setSelection(16);
+                }
             }
         });
     }
@@ -104,6 +159,7 @@ public class PaymentActivity extends AppCompatActivity {
             }
         });
     }
+
     private void clearCartCache() {
         SharedPreferences sharedPreferences = getSharedPreferences("UrbanMartPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -112,6 +168,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         Toast.makeText(PaymentActivity.this, "Cart has been cleared!", Toast.LENGTH_SHORT).show();
     }
+
     // Method to navigate to OrderActivity
     private void goToOrderActivity() {
         Intent intent = new Intent(PaymentActivity.this, OrderActivity.class);
