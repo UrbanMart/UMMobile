@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Payment header -->
+    <TextView
+        android:id="@+id/paymentHeaderTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Payment"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="16dp"/>
+
+    <!-- Spacer to push the header to the center -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Payment details -->
+    <LinearLayout
+        android:id="@+id/paymentDetailsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Card Number input -->
+        <EditText
+            android:id="@+id/cardNumberEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Card Number"
+            android:inputType="number" />
+
+        <!-- Expiration Date input -->
+        <EditText
+            android:id="@+id/expirationDateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="MM/YY"
+            android:inputType="date" />
+
+        <!-- CVV input -->
+        <EditText
+            android:id="@+id/cvvEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="CVV"
+            android:inputType="numberPassword"
+            android:maxLength="3" />
+    </LinearLayout>
+
+    <!-- Spacer to push the button to the bottom -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Button to proceed with the payment -->
+    <Button
+        android:id="@+id/proceedButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_button_background"
+        android:text="Proceed"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+</LinearLayout>

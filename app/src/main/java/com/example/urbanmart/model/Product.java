@@ -6,6 +6,17 @@ public class Product {
     private double price;
     private String category;
     private String imageUrl;
+    private int quantity; // New field
+
+
+    public Product(String id, String name, double price, String category, String imageUrl) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.imageUrl = imageUrl;
+        this.quantity = 1; // Default value
+    }
 
     // Getters and setters
     public String getId() { return id; }
@@ -22,4 +33,6 @@ public class Product {
 
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public int getQuantity() { return quantity; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
 }
