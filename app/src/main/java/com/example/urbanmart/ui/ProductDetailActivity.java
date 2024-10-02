@@ -20,8 +20,9 @@ import java.util.List;
 public class ProductDetailActivity extends AppCompatActivity {
 
     private ImageView productImage;
-    private TextView productName, productPrice, productCategory;
-    private Button addToCartButton;
+    private TextView productName, productPrice, productCategory, quantityTextView;
+    private Button addToCartButton, increaseQuantityButton, decreaseQuantityButton;
+    private int quantity = 1; // Default quantity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         productName = findViewById(R.id.productName);
         productPrice = findViewById(R.id.productPrice);
         productCategory = findViewById(R.id.productCategory);
-        addToCartButton = findViewById(R.id.addToCartButton); // Make sure this button exists in your layout
+        quantityTextView = findViewById(R.id.quantityTextView);
+        addToCartButton = findViewById(R.id.addToCartButton);
+        increaseQuantityButton = findViewById(R.id.increaseQuantityButton);
+        decreaseQuantityButton = findViewById(R.id.decreaseQuantityButton);
 
         // Get the product details from the intent
         String name = getIntent().getStringExtra("product_name");
@@ -51,14 +55,27 @@ public class ProductDetailActivity extends AppCompatActivity {
         } else {
             Glide.with(this)
                     .load(imageUrl)
-                    .placeholder(R.drawable.placeholder_image) // Use the placeholder image while loading
+                    .placeholder(R.drawable.placeholder_image)
                     .into(productImage);
         }
 
+        // Set up quantity adjustment buttons
+        increaseQuantityButton.setOnClickListener(v -> {
+            quantity++;
+            quantityTextView.setText(String.valueOf(quantity));
+        });
+
+        decreaseQuantityButton.setOnClickListener(v -> {
+            if (quantity > 1) {
+                quantity--;
+                quantityTextView.setText(String.valueOf(quantity));
+            }
+        });
+
         // Set up the "Add to Cart" button click listener
         addToCartButton.setOnClickListener(v -> {
-            // Create a new product object
-            Product product = new Product(name, price, category, imageUrl);
+            // Create a new product object with the selected quantity
+            Product product = new Product(name, price * quantity, category, imageUrl);
 
             // Add the product to the cart
             addToCart(product);
@@ -77,10 +94,25 @@ public class ProductDetailActivity extends AppCompatActivity {
             cart = new ArrayList<>(); // Initialize the cart if it's null
         }
 
-        cart.add(product); // Add the new product to the cart
+        boolean productExists = false; // Flag to check if the product exists
+
+        for (Product cartProduct : cart) {
+            // Check if the product already exists in the cart (based on name or some unique identifier)
+            if (cartProduct.getName().equals(product.getName())) {
+                cartProduct.setPrice(cartProduct.getPrice() + product.getPrice()); // Update the price by adding new price
+                productExists = true; // Set the flag to true
+                break; // Exit the loop since we found the product
+            }
+        }
+
+        if (!productExists) {
+            cart.add(product); // Add the new product to the cart if it doesn't exist
+        }
 
         // Save the updated cart back to SharedPreferences
         String updatedCartJson = gson.toJson(cart);
         sharedPreferences.edit().putString("cart", updatedCartJson).apply(); // Apply the changes
     }
+
+
 }

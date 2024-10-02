@@ -17,12 +17,13 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends AppCompatActivity implements CartAdapter.CartTotalPriceListener {
 
     private RecyclerView cartRecyclerView;
     private CartAdapter cartAdapter;
     private TextView totalPriceTextView;
     private Button checkoutButton; // Declare checkout button
+    private double totalPrice = 0; // Keep track of total price
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +54,14 @@ public class CartActivity extends AppCompatActivity {
             return; // Exit the method early if the cart is empty
         }
 
-        double totalPrice = 0;
+        totalPrice = 0; // Reset total price
         for (Product product : cart) {
             totalPrice += product.getPrice();
         }
 
         totalPriceTextView.setText(String.format("$%.2f", totalPrice));
 
-        cartAdapter = new CartAdapter(cart, this);
+        cartAdapter = new CartAdapter(cart, this, this); // Pass the listener to the adapter
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         cartRecyclerView.setAdapter(cartAdapter);
     }
@@ -72,5 +73,11 @@ public class CartActivity extends AppCompatActivity {
 
         // Show a Toast with the cart JSON
         Toast.makeText(this, "Cart Items: " + cartJson, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onTotalPriceUpdated(double amount) {
+        totalPrice += amount; // Update the total price
+        totalPriceTextView.setText(String.format("$%.2f", totalPrice)); // Update the total price display
     }
 }

@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.example.urbanmart.R;
 import com.example.urbanmart.model.Product;
 import com.google.gson.Gson;
@@ -21,10 +24,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     private List<Product> cartItems;
     private Context context;
+    private CartTotalPriceListener totalPriceListener; // Declare a listener for total price updates
 
-    public CartAdapter(List<Product> cartItems, Context context) {
+    public CartAdapter(List<Product> cartItems, Context context, CartTotalPriceListener totalPriceListener) {
         this.cartItems = cartItems;
         this.context = context;
+        this.totalPriceListener = totalPriceListener; // Initialize the listener
     }
 
     @NonNull
@@ -37,11 +42,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         Product product = cartItems.get(position);
+
         holder.productNameTextView.setText(product.getName());
         holder.productPriceTextView.setText(String.format("$%.2f", product.getPrice()));
         holder.productQuantityTextView.setText("Quantity: 1");
 
+        // Load product image using Glide
+        Glide.with(context)
+                .load(product.getImageUrl()) // Assuming Product has a getImageUrl method
+                .placeholder(R.drawable.placeholder_image) // Optional placeholder
+                .into(holder.productImageView);
+
         holder.removeButton.setOnClickListener(v -> {
+            // Update total price before removing the item
+            totalPriceListener.onTotalPriceUpdated(-product.getPrice()); // Subtract the price of the product being removed
+
             // Remove the item from the list
             cartItems.remove(position);
             notifyItemRemoved(position);
@@ -70,18 +85,27 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         editor.apply(); // Apply the changes asynchronously
     }
 
+    // Define an interface for total price updates
+    public interface CartTotalPriceListener {
+        void onTotalPriceUpdated(double amount); // Amount to add or subtract
+    }
+
     static class CartViewHolder extends RecyclerView.ViewHolder {
         TextView productNameTextView;
         TextView productPriceTextView;
         TextView productQuantityTextView;
         Button removeButton;
+        ImageView productImageView; // Add this line
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
+            productImageView = itemView.findViewById(R.id.productImageView); // Initialize the ImageView
             productNameTextView = itemView.findViewById(R.id.productNameTextView);
             productPriceTextView = itemView.findViewById(R.id.productPriceTextView);
             productQuantityTextView = itemView.findViewById(R.id.productQuantityTextView);
             removeButton = itemView.findViewById(R.id.removeButton);
         }
     }
+
 }
+
