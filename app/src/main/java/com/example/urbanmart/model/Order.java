@@ -17,7 +17,45 @@ public class Order {
         this.status = status;
     }
 
-    // Getters and setters (optional)
+    // Getters
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public String getOrderDate() {
+        return orderDate;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    // Setters
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
-
-

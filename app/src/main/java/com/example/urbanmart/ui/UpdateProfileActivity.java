@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +45,20 @@ public class UpdateProfileActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+        ImageView notificationIcon = findViewById(R.id.notificationIcon);
+        ImageView historyImage = findViewById(R.id.historyImage);
+
+        // Set up click listener for notification icon
+        notificationIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(UpdateProfileActivity.this, NotificationActivity.class);
+            startActivity(intent);
+        });
+
+        // Set up click listener for history icon
+        historyImage.setOnClickListener(v -> {
+            Intent intent = new Intent(UpdateProfileActivity.this, OrderActivity.class);
+            startActivity(intent);
         });
 
         usernameEditText = findViewById(R.id.usernameEditText);

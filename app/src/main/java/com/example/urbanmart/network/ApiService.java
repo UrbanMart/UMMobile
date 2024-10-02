@@ -30,6 +30,20 @@ public class ApiService {
         this.client = builder.build();
         this.gson = new Gson();
     }
+    /**
+     * Fetch list of orders from the API
+     *
+     * @param callback Callback to handle response or failure
+     */
+    public void fetchOrders(Callback callback) {
+        Request request = new Request.Builder()
+                .url(BASE_URL + "Orders") // Assuming this is the correct endpoint
+                .get()
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
 
     /**
      * Login user by making a POST request

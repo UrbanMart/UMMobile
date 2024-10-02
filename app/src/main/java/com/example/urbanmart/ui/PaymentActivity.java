@@ -1,5 +1,6 @@
 package com.example.urbanmart.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -92,6 +93,7 @@ public class PaymentActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         Toast.makeText(PaymentActivity.this, "Order submitted successfully!", Toast.LENGTH_LONG).show();
                         clearCartCache();
+                        goToOrderActivity();
                     });
                 } else {
                     // Handle error response
@@ -109,5 +111,11 @@ public class PaymentActivity extends AppCompatActivity {
         editor.apply(); // Apply the changes
 
         Toast.makeText(PaymentActivity.this, "Cart has been cleared!", Toast.LENGTH_SHORT).show();
+    }
+    // Method to navigate to OrderActivity
+    private void goToOrderActivity() {
+        Intent intent = new Intent(PaymentActivity.this, OrderActivity.class);
+        startActivity(intent);
+        finish(); // Close PaymentActivity to prevent going back to it
     }
 }
