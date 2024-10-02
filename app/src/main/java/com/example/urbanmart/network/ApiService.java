@@ -112,7 +112,7 @@ public class ApiService {
      */
     public void fetchProducts(Callback callback) {
         Request request = new Request.Builder()
-                .url(BASE_URL + "Products?includeInactive=true")
+                .url(BASE_URL + "Products?isActive=true")
                 .get()
                 .build();
 
