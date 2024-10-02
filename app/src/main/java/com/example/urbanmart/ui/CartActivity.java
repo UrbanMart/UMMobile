@@ -51,7 +51,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartT
             List<Product> cart = gson.fromJson(cartJson, type);
 
             if (cart == null || cart.isEmpty()) {
-                checkoutButton.setText("Checkout - LKR 0.00");
+                checkoutButton.setText("Checkout");
                 totalPrice = 0; // Reset total price
                 return;
             }
@@ -104,7 +104,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartT
                 .setMessage("Are you sure you want to place this order?")
                 .setPositiveButton("Yes", (dialog, which) -> {
                     String orderJson = gson.toJson(order);
-                    Toast.makeText(this, "Order placed: " + orderJson, Toast.LENGTH_LONG).show();
 
                     // Start PaymentActivity and pass the order JSON
                     Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
