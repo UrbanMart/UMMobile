@@ -98,7 +98,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartT
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             orderDate = java.time.Instant.now().toString();
         }
-        Order order = new Order(customerId, userName, orderDate, totalPrice, orderItems, "Pending");
+        Order order = new Order(customerId, userName, orderDate, totalPrice, orderItems, "Processing");
 
         // Show confirmation dialog before finalizing the order
         new AlertDialog.Builder(this)
