@@ -37,12 +37,17 @@ public class LoginActivity extends AppCompatActivity {
 
         apiService = new ApiService(this);  // Pass context for saving session
         gson = new Gson();
+
+        // Check if user is already logged in
+        checkIfLoggedIn();
+
         signupButton.setOnClickListener(new View.OnClickListener() {  // Add this block
             @Override
             public void onClick(View v) {
                 goToSignupPage();  // Navigate to SignupActivity
             }
         });
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +62,16 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void checkIfLoggedIn() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UrbanMartPrefs", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", null);
+
+        // If userId exists, navigate to HomeActivity
+        if (userId != null) {
+            goToHomePage();
+        }
     }
 
     private void loginUser(String email, String password) {
@@ -103,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();  // Close the LoginActivity
     }
+
     private void goToSignupPage() {
         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
         startActivity(intent);

@@ -2,25 +2,76 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- User name at the top -->
-    <TextView
-        android:id="@+id/userNameTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome, User"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:focusable="true" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-    <!-- RecyclerView for the products in a grid layout -->
+        <ImageView
+            android:id="@+id/menuImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/menu" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/logoImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/logo"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/cartIcon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/bag" />
+    </LinearLayout>
+
+
+    <!-- Search Bar -->
+    <EditText
+        android:id="@+id/searchBar"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search products"
+        android:padding="10dp"
+        android:background="@drawable/search_bar_background" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
+<!--    <ImageView-->
+<!--        android:id="@+id/bannerImage"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="183dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/banner" />-->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/productRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"/>
 </LinearLayout>
