@@ -9,12 +9,13 @@ public class Product {
     private int quantity; // New field
 
 
-    public Product(String name, double price, String category, String imageUrl) {
+    public Product(String id, String name, double price, String category, String imageUrl) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
         this.imageUrl = imageUrl;
-        this.quantity = quantity;
+        this.quantity = 0; // Default value
     }
 
     // Getters and setters

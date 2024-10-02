@@ -47,6 +47,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.productPriceTextView.setText(String.format("$%.2f", product.getPrice())); // Display the total price
         holder.productQuantityTextView.setText("Quantity: " + product.getQuantity()); // Show actual quantity
 
+        // Optionally, display the product ID (for debugging purposes)
+        // holder.productIdTextView.setText("ID: " + product.getId()); // Add this line if you have a TextView for product ID
+
         // Load product image using Glide
         Glide.with(context)
                 .load(product.getImageUrl()) // Assuming Product has a getImageUrl method
@@ -54,8 +57,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 .into(holder.productImageView);
 
         holder.removeButton.setOnClickListener(v -> {
-            // Update total price before removing the item
-            totalPriceListener.onTotalPriceUpdated(-product.getPrice()); // Subtract the price of the product being removed
+            totalPriceListener.onTotalPriceUpdated(-product.getPrice()); // Update total price before removing the item
 
             // Remove the item from the list
             cartItems.remove(position);
@@ -66,6 +68,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             updateCartInPreferences(cartItems);
         });
     }
+
 
 
     @Override

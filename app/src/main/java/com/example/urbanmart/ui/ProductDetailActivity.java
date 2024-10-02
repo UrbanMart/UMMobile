@@ -77,17 +77,24 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         addToCartButton.setOnClickListener(v -> {
             // Create a new product object with the selected quantity
-            Product product = new Product(name, price * quantity, category, imageUrl);
+            Product product = new Product(
+                    getIntent().getStringExtra("product_id"), // Add product ID here
+                    name,
+                    price * quantity,
+                    category,
+                    imageUrl
+            );
 
             // Add the product to the cart and navigate to the cart
             addToCart(product);
-            Toast.makeText(this, "Product added to cart!", Toast.LENGTH_SHORT).show(); // Show toast message
+            Toast.makeText(this, "Product added to cart!", Toast.LENGTH_SHORT).show();
 
             // Start CartActivity
             Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
             startActivity(intent);
             finish(); // Optionally, finish this activity if you don't want to return here
         });
+
     }
 
     private void addToCart(Product product) {
@@ -105,8 +112,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         boolean productExists = false; // Flag to check if the product exists
 
         for (Product cartProduct : cart) {
-            // Check if the product already exists in the cart (based on name or some unique identifier)
-            if (cartProduct.getName().equals(product.getName())) {
+            if (cartProduct.getId().equals(product.getId())) { // Change to compare IDs
                 cartProduct.setPrice(cartProduct.getPrice() + (product.getPrice() * quantity)); // Update the price based on quantity
                 cartProduct.setQuantity(cartProduct.getQuantity() + quantity); // Update the quantity
                 productExists = true; // Set the flag to true
