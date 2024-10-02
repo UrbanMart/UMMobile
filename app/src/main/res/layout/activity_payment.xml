@@ -5,10 +5,47 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Payment header -->
     <TextView
-        android:id="@+id/orderJsonTextView"
+        android:id="@+id/paymentHeaderTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Payment"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="16dp"/>
+
+    <!-- Card Number input -->
+    <EditText
+        android:id="@+id/cardNumberEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Order JSON will appear here"
-        android:textSize="16sp" />
+        android:hint="Card Number"
+        android:inputType="number" />
+
+    <!-- Expiration Date input -->
+    <EditText
+        android:id="@+id/expirationDateEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="MM/YY"
+        android:inputType="date" />
+
+    <!-- CVV input -->
+    <EditText
+        android:id="@+id/cvvEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="CVV"
+        android:inputType="numberPassword"
+        android:maxLength="3" />
+
+    <!-- Button to proceed with the payment -->
+    <Button
+        android:id="@+id/proceedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Proceed"
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>

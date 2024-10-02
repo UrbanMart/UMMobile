@@ -105,6 +105,18 @@ public class ApiService {
         client.newCall(request).enqueue(callback);
     }
 
+    // Method to submit the order
+    public void submitOrder(String orderJson, Callback callback) {
+        RequestBody body = RequestBody.create(orderJson, JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + "Orders")
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
     /**
      * Inner class to represent a user login request body
      */
