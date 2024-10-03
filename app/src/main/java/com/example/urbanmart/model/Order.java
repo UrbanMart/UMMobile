@@ -46,7 +46,7 @@ public class Order {
 
     // Setters
     public void setCustomerId(String customerId) {
-        this.customerId = customerId; // Setter for customer ID
+        this.customerId = customerId;
     }
 
     public void setCustomerName(String customerName) {

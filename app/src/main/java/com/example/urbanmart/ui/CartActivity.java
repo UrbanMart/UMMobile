@@ -107,26 +107,12 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartT
                 .setPositiveButton("Yes", (dialog, which) -> {
                     String orderJson = gson.toJson(order);
                     Log.d("OrderDetails", orderJson);
-                    // Start PaymentActivity and pass the order JSON
                     Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
                     intent.putExtra("orderJson", orderJson);
                     startActivity(intent);
-
-                    // Clear the cart after order placement
                 })
                 .setNegativeButton("No", null)
                 .show();
-    }
-
-
-    private void clearCart() {
-        SharedPreferences sharedPreferences = getSharedPreferences("UrbanMartPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("cart", "[]");
-        editor.apply();
-        totalPrice = 0;
-        checkoutButton.setText("Checkout");
-        cartAdapter.notifyDataSetChanged(); // Notify adapter of changes
     }
 
     @Override

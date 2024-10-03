@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         // Check if user is already logged in
         checkIfLoggedIn();
 
-        signupButton.setOnClickListener(new View.OnClickListener() {  // Add this block
+        signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToSignupPage();  // Navigate to SignupActivity

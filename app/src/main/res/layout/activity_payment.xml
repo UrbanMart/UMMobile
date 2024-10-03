@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -10,17 +11,18 @@
         android:id="@+id/paymentHeaderTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="16dp"
         android:text="Payment"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="16dp"/>
+        android:textStyle="bold" />
 
     <!-- Spacer to push the header to the center -->
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="#FFFFFF" />
 
     <!-- Payment details -->
     <LinearLayout
@@ -59,7 +61,8 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="#FFFFFF" />
 
     <!-- Button to proceed with the payment -->
     <Button
