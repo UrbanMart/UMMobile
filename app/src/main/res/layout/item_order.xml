@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="Status"
         android:textSize="12sp"
-        android:textColor="@android:color/holo_red_dark" />
+        android:textColor="@color/gray" />
 
     <!-- Horizontal line (divider) -->
     <View

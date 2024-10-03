@@ -37,7 +37,7 @@ public class ApiService {
      */
     public void fetchOrders(Callback callback) {
         Request request = new Request.Builder()
-                .url(BASE_URL + "Orders") // Assuming this is the correct endpoint
+                .url(BASE_URL + "Orders")
                 .get()
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -119,7 +119,12 @@ public class ApiService {
         client.newCall(request).enqueue(callback);
     }
 
-    // Method to submit the order
+    /**
+     * Submit an order by making a POST request
+     *
+     * @param orderJson The order details in JSON format
+     * @param callback  Callback to handle response or failure
+     */
     public void submitOrder(String orderJson, Callback callback) {
         RequestBody body = RequestBody.create(orderJson, JSON);
         Request request = new Request.Builder()

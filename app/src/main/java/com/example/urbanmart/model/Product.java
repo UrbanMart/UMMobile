@@ -6,7 +6,7 @@ public class Product {
     private double price;
     private String category;
     private String imageUrl;
-    private int quantity; // New field
+    private int quantity;
 
 
     public Product(String id, String name, double price, String category, String imageUrl) {
@@ -15,7 +15,7 @@ public class Product {
         this.price = price;
         this.category = category;
         this.imageUrl = imageUrl;
-        this.quantity = 1; // Default value
+        this.quantity = 1;
     }
 
     // Getters and setters
