@@ -18,8 +18,13 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -61,10 +66,11 @@ public class OrderActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
-                    Type orderListType = new TypeToken<List<Order>>() {}.getType();
+                    Type orderListType = new TypeToken<List<Order>>() {
+                    }.getType();
                     List<Order> allOrders = new Gson().fromJson(responseData, orderListType);
 
-                    // Filter orders by customerName
+                    // Filter orders by customerId
                     List<Order> filteredOrders = new ArrayList<>();
                     for (Order order : allOrders) {
                         Log.d("CustomerId", order.getCustomerId());
@@ -72,6 +78,18 @@ public class OrderActivity extends AppCompatActivity {
                             filteredOrders.add(order);
                         }
                     }
+
+                    // Sort the filtered orders by date in descending order
+                    Collections.sort(filteredOrders, (o1, o2) -> {
+                        try {
+                            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+                            inputFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                            return inputFormat.parse(o2.getOrderDate()).compareTo(inputFormat.parse(o1.getOrderDate()));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            return 0;
+                        }
+                    });
 
                     runOnUiThread(() -> {
                         orderAdapter.setOrders(filteredOrders);

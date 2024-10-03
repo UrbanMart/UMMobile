@@ -77,7 +77,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         addToCartButton.setOnClickListener(v -> {
             // Create a new product object with the selected quantity
             Product product = new Product(
-                    getIntent().getStringExtra("product_id"), // Add product ID here
+                    getIntent().getStringExtra("product_id"),
                     name,
                     price * quantity,
                     category,
@@ -100,8 +100,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UrbanMartPrefs", MODE_PRIVATE);
         String cartJson = sharedPreferences.getString("cart", "[]");
 
-        Log.d("SharedPreferencesDebug", "Cart JSON: " + cartJson); // Fix this line
-
         Gson gson = new Gson();
         Type type = new TypeToken<List<Product>>() {}.getType();
         List<Product> cart = gson.fromJson(cartJson, type);
@@ -110,14 +108,10 @@ public class ProductDetailActivity extends AppCompatActivity {
             cart = new ArrayList<>(); // Initialize the cart if it's null
         }
 
-        // Flag to check if the product exists
-        boolean productExists = false;
-
         for (int i = 0; i < cart.size(); i++) {
             Product cartProduct = cart.get(i);
             if (cartProduct.getId().equals(product.getId())) { // Compare product IDs
                 cart.remove(i); // Remove the existing product
-                productExists = true; // Set the flag to true
                 break; // Exit the loop since we found and removed the product
             }
         }

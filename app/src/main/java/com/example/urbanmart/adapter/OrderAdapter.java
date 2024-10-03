@@ -54,6 +54,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
         // Set order status
         holder.statusTextView.setText(order.getStatus());
+
+        // Change the color of the status text if it's 'Delivered'
+        if (order.getStatus().equalsIgnoreCase("Delivered")) {
+            holder.statusTextView.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.green)); // Use a predefined green color
+        } else {
+            holder.statusTextView.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.gray)); // Default text color
+        }
     }
 
     @Override
