@@ -6,6 +6,8 @@ public class Product {
     private double price;
     private String category;
     private String imageUrl;
+    private String vendorId;
+
     private int quantity;
 
 
@@ -21,6 +23,9 @@ public class Product {
     // Getters and setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
+
+    public String getVendorId() { return vendorId; }
+    public void setVendorId(String vendorId) { this.vendorId = vendorId; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

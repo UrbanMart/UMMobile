@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:orientation="vertical"
     android:padding="16dp">
 
     <ImageView
@@ -17,6 +16,7 @@
         android:id="@+id/productName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/productImage"
         android:layout_marginTop="16dp"
         android:text="Product Name"
         android:textSize="20sp"
@@ -26,6 +26,7 @@
         android:id="@+id/productPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/productName"
         android:layout_marginTop="6dp"
         android:text="Price"
         android:textColor="@color/design_default_color_on_secondary"
@@ -35,15 +36,18 @@
         android:id="@+id/productCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/productPrice"
         android:layout_marginTop="8dp"
         android:text="Category"
         android:textColor="@color/design_default_color_on_secondary"
         android:textSize="16sp" />
 
-    <!-- Quantity adjustment section -->
+    <!-- Quantity adjustment Section -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/quantityAdjustmentLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/productCategory"
         android:layout_marginTop="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -56,7 +60,7 @@
             android:backgroundTint="@color/black"
             android:text="-"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/quantityTextView"
@@ -64,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="1"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/increaseQuantityButton"
@@ -73,24 +77,60 @@
             android:backgroundTint="@color/black"
             android:text="+"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
-    <!-- Spacer to push the button to the bottom -->
-    <View
+    <!-- New Compact Feedback Section -->
+    <EditText
+        android:id="@+id/feedbackCommentEditText"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#FFFFFF" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/quantityAdjustmentLayout"
+        android:layout_marginTop="18dp"
+        android:hint="Add a feedback to Vendor"
+        android:paddingBottom="18dp"
+        android:textSize="14sp" />
+
+    <RatingBar
+        android:id="@+id/feedbackRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/RatingBar"
+        android:layout_below="@id/feedbackCommentEditText"
+        android:layout_gravity="start"
+        android:layout_marginTop="4dp"
+        android:numStars="5"
+        android:stepSize="1" />
+
+    <Button
+        android:id="@+id/submitFeedbackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feedbackRatingBar"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="-56dp"
+        android:layout_toEndOf="@id/feedbackRatingBar"
+        android:text="Submit"
+        android:textSize="14sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/feedbackRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/submitFeedbackButton"
+        android:layout_marginTop="16dp"
+        android:visibility="gone" />
 
     <!-- Add to Cart Button -->
     <Button
         android:id="@+id/addToCartButton"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="16dp"
         android:background="@drawable/rounded_button_background"
         android:text="Add to Cart"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
-</LinearLayout>
+
+</RelativeLayout>
