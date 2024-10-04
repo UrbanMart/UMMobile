@@ -97,6 +97,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     // Method to format the currency in LKR
     private String formatCurrency(double amount) {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "LK"));
-        return currencyFormat.format(amount);
+        String formattedAmount = currencyFormat.format(amount);
+
+        // Adding a space between the currency symbol and the amount
+        if (formattedAmount != null && formattedAmount.length() > 1) {
+            String currencySymbol = currencyFormat.getCurrency().getSymbol();
+            // Split the formatted amount into currency symbol and amount
+            String amountPart = formattedAmount.substring(currencySymbol.length()).trim();
+            return currencySymbol + " " + amountPart; // Add space between them
+        }
+
+        return formattedAmount; // Fallback if formatting fails
     }
+
 }
