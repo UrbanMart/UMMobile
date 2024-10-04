@@ -135,6 +135,37 @@ public class ApiService {
 
         client.newCall(request).enqueue(callback);
     }
+    /**
+     * Fetch notifications for a specific user.
+     *
+     * @param userId   The ID of the user whose notifications should be fetched.
+     * @param callback Callback to handle response or failure.
+     */
+    public void fetchNotificationsForUser(String userId, Callback callback) {
+        Request request = new Request.Builder()
+                .url(BASE_URL + "Notifications/user/" + userId)
+                .get()
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    /**
+     * Mark notification as read.
+     *
+     * @param notificationId The ID of the notification to mark as read.
+     * @param callback       Callback to handle response or failure.
+     */
+    public void markNotificationAsRead(String notificationId, Callback callback) {
+        Request request = new Request.Builder()
+                .url(BASE_URL + "Notifications/" + notificationId + "/read")
+                .put(RequestBody.create("", JSON)) // Empty body for the PUT request
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
 
     /**
      * Inner class to represent a user login request body
