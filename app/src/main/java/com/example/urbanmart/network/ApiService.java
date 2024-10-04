@@ -2,6 +2,7 @@ package com.example.urbanmart.network;
 
 import android.content.Context;
 
+import com.example.urbanmart.model.Feedback;
 import com.google.gson.Gson;
 import com.example.urbanmart.model.User;
 import okhttp3.Callback;
@@ -79,6 +80,22 @@ public class ApiService {
         Request request = new Request.Builder()
                 .url(BASE_URL + "Users")
                 .post(body)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    /**
+     * Fetch users by a list of IDs (comma-separated).
+     *
+     * @param userId      Comma-separated string of user IDs.
+     * @param callback Callback to handle response or failure.
+     */
+    public void fetchUsersByIds(String userId, Callback callback) {
+        Request request = new Request.Builder()
+                .url(BASE_URL + "Users/" + userId)
+                .get()
                 .addHeader("Content-Type", "application/json")
                 .build();
 
@@ -166,6 +183,42 @@ public class ApiService {
 
         client.newCall(request).enqueue(callback);
     }
+
+    /**
+     * Fetch feedback for a specific vendor.
+     *
+     * @param vendorId The ID of the vendor whose feedback should be fetched.
+     * @param callback Callback to handle response or failure.
+     */
+    public void fetchVendorFeedback(String vendorId, Callback callback) {
+        Request request = new Request.Builder()
+                .url(BASE_URL + "VendorFeedback/vendor/" + vendorId)
+                .get()
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    /**
+     * Post feedback for a vendor.
+     *
+     * @param feedback The feedback object to post.
+     * @param callback
+     */
+    public void postVendorFeedback(Feedback feedback, Callback callback) {
+        String json = gson.toJson(feedback);
+
+        RequestBody body = RequestBody.create(json, JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + "VendorFeedback")
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
 
     /**
      * Inner class to represent a user login request body
