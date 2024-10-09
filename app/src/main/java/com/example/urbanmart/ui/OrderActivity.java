@@ -48,7 +48,7 @@ public class OrderActivity extends AppCompatActivity {
 
         ordersRecyclerView = findViewById(R.id.ordersRecyclerView);
         ordersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        orderAdapter = new OrderAdapter(new ArrayList<>());
+        orderAdapter = new OrderAdapter(OrderActivity.this, new ArrayList<>());
         ordersRecyclerView.setAdapter(orderAdapter);
 
         apiService = new ApiService(this);
@@ -74,6 +74,7 @@ public class OrderActivity extends AppCompatActivity {
                     List<Order> filteredOrders = new ArrayList<>();
                     for (Order order : allOrders) {
                         Log.d("CustomerId", order.getCustomerId());
+                        Log.d("OrderId", order.getOrderId());
                         if (order.getCustomerId().equals(customerId)) {
                             filteredOrders.add(order);
                         }
