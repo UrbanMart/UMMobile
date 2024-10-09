@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:padding="8dp"
     android:background="@android:color/white"
     android:layout_marginBottom="8dp">
@@ -21,7 +20,8 @@
         android:layout_height="wrap_content"
         android:text="Order Date"
         android:textSize="14sp"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@android:color/darker_gray"
+        android:layout_below="@id/customerNameTextView" />
 
     <TextView
         android:id="@+id/totalAmountTextView"
@@ -29,7 +29,8 @@
         android:layout_height="wrap_content"
         android:text="Total Amount"
         android:textSize="14sp"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:layout_below="@id/orderDateTextView" />
 
     <TextView
         android:id="@+id/statusTextView"
@@ -37,12 +38,24 @@
         android:layout_height="wrap_content"
         android:text="Status"
         android:textSize="12sp"
-        android:textColor="@color/gray" />
+        android:textColor="@color/gray"
+        android:layout_below="@id/totalAmountTextView" />
+
+    <Button
+        android:id="@+id/requestCancellationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:textSize="14sp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="8dp" />
 
     <!-- Horizontal line (divider) -->
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="#B3B3B3"
+        android:layout_below="@id/statusTextView"
         android:layout_marginTop="8dp"/>
-</LinearLayout>
+</RelativeLayout>
