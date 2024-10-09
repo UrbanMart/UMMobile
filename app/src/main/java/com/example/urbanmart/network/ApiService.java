@@ -219,6 +219,24 @@ public class ApiService {
         client.newCall(request).enqueue(callback);
     }
 
+    /**
+     * Sends a request to cancel an order using the specified order ID.
+     * This method constructs an HTTP PUT request with an empty body
+     * and sends it to the cancellation endpoint of the API.
+     *
+     * @param orderId  The unique identifier of the order to be cancelled.
+     * @param callback The callback to handle the response from the server.
+     */
+    public void requestOrderCancellation(String orderId, Callback callback) {
+        Request request = new Request.Builder()
+                .url(BASE_URL + "Orders/" + orderId + "/request-cancellation")
+                .put(RequestBody.create("", JSON)) // Empty body
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
 
     /**
      * Inner class to represent a user login request body

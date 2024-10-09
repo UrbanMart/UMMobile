@@ -3,6 +3,7 @@ package com.example.urbanmart.model;
 import java.util.List;
 
 public class Order {
+    private String id;
     private String customerId;
     private String customerName;
     private String orderDate;
@@ -20,6 +21,9 @@ public class Order {
     }
 
     // Getters
+    public String getOrderId() {
+        return id;
+    }
     public String getCustomerId() {
         return customerId;
     }
@@ -45,9 +49,9 @@ public class Order {
     }
 
     // Setters
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
+    public void setOrderId(String orderId) { this.id = orderId; }
+
+    public void setCustomerId(String customerId) { this.customerId = customerId; }
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
