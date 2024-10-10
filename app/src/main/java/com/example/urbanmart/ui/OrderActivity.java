@@ -66,16 +66,15 @@ public class OrderActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
-                    Type orderListType = new TypeToken<List<Order>>() {
-                    }.getType();
+                    Type orderListType = new TypeToken<List<Order>>() {}.getType();
                     List<Order> allOrders = new Gson().fromJson(responseData, orderListType);
 
-                    // Filter orders by customerId
+                    // Filter orders by customerId, ignoring null customerId values
                     List<Order> filteredOrders = new ArrayList<>();
                     for (Order order : allOrders) {
                         Log.d("CustomerId", order.getCustomerId());
                         Log.d("OrderId", order.getOrderId());
-                        if (order.getCustomerId().equals(customerId)) {
+                        if (order.getCustomerId() != null && order.getCustomerId().equals(customerId)) {
                             filteredOrders.add(order);
                         }
                     }
