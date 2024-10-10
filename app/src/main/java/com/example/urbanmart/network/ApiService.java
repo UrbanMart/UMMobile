@@ -31,21 +31,8 @@ public class ApiService {
         this.client = builder.build();
         this.gson = new Gson();
     }
-    /**
-     * Fetch list of orders from the API
-     *
-     * @param callback Callback to handle response or failure
-     */
-    public void fetchOrders(Callback callback) {
-        Request request = new Request.Builder()
-                .url(BASE_URL + "Orders")
-                .get()
-                .addHeader("Content-Type", "application/json")
-                .build();
 
-        client.newCall(request).enqueue(callback);
-    }
-
+    // User-related APIs
     /**
      * Login user by making a POST request
      *
@@ -87,22 +74,6 @@ public class ApiService {
     }
 
     /**
-     * Fetch users by a list of IDs (comma-separated).
-     *
-     * @param userId      Comma-separated string of user IDs.
-     * @param callback Callback to handle response or failure.
-     */
-    public void fetchUsersByIds(String userId, Callback callback) {
-        Request request = new Request.Builder()
-                .url(BASE_URL + "Users/" + userId)
-                .get()
-                .addHeader("Content-Type", "application/json")
-                .build();
-
-        client.newCall(request).enqueue(callback);
-    }
-
-    /**
      * Update user profile by making a PUT request
      *
      * @param userId   The user ID to update
@@ -123,14 +94,32 @@ public class ApiService {
     }
 
     /**
-     * Fetch list of products from the API
+     * Fetch users by a list of IDs (comma-separated).
+     *
+     * @param userId      Comma-separated string of user IDs.
+     * @param callback Callback to handle response or failure.
+     */
+    public void fetchUsersByIds(String userId, Callback callback) {
+        Request request = new Request.Builder()
+                .url(BASE_URL + "Users/" + userId)
+                .get()
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    // Order-related APIs
+    /**
+     * Fetch list of orders from the API
      *
      * @param callback Callback to handle response or failure
      */
-    public void fetchProducts(Callback callback) {
+    public void fetchOrders(Callback callback) {
         Request request = new Request.Builder()
-                .url(BASE_URL + "Products?isActive=true")
+                .url(BASE_URL + "Orders")
                 .get()
+                .addHeader("Content-Type", "application/json")
                 .build();
 
         client.newCall(request).enqueue(callback);
@@ -152,6 +141,41 @@ public class ApiService {
 
         client.newCall(request).enqueue(callback);
     }
+
+    /**
+     * Sends a request to cancel an order using the specified order ID.
+     * This method constructs an HTTP PUT request with an empty body
+     * and sends it to the cancellation endpoint of the API.
+     *
+     * @param orderId  The unique identifier of the order to be cancelled.
+     * @param callback The callback to handle the response from the server.
+     */
+    public void requestOrderCancellation(String orderId, Callback callback) {
+        Request request = new Request.Builder()
+                .url(BASE_URL + "Orders/" + orderId + "/request-cancellation")
+                .put(RequestBody.create("", JSON)) // Empty body
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    // Product-related APIs
+    /**
+     * Fetch list of products from the API
+     *
+     * @param callback Callback to handle response or failure
+     */
+    public void fetchProducts(Callback callback) {
+        Request request = new Request.Builder()
+                .url(BASE_URL + "Products?isActive=true")
+                .get()
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    // Notification-related APIs
     /**
      * Fetch notifications for a specific user.
      *
@@ -184,6 +208,7 @@ public class ApiService {
         client.newCall(request).enqueue(callback);
     }
 
+    // Vendor feedback-related APIs
     /**
      * Fetch feedback for a specific vendor.
      *
@@ -219,28 +244,7 @@ public class ApiService {
         client.newCall(request).enqueue(callback);
     }
 
-    /**
-     * Sends a request to cancel an order using the specified order ID.
-     * This method constructs an HTTP PUT request with an empty body
-     * and sends it to the cancellation endpoint of the API.
-     *
-     * @param orderId  The unique identifier of the order to be cancelled.
-     * @param callback The callback to handle the response from the server.
-     */
-    public void requestOrderCancellation(String orderId, Callback callback) {
-        Request request = new Request.Builder()
-                .url(BASE_URL + "Orders/" + orderId + "/request-cancellation")
-                .put(RequestBody.create("", JSON)) // Empty body
-                .addHeader("Content-Type", "application/json")
-                .build();
-
-        client.newCall(request).enqueue(callback);
-    }
-
-
-    /**
-     * Inner class to represent a user login request body
-     */
+    // Inner class for login request
     static class UserLoginRequest {
         String email;
         String password;
