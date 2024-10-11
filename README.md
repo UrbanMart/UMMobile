@@ -49,7 +49,3 @@ Feel free to fork the repository and submit pull requests. Any contributions to 
 ## License
 
 This project is licensed under the MIT License.
-
----
-
-Let me know if you want to modify or add anything else!
