@@ -43,12 +43,23 @@
         android:textColor="@color/design_default_color_on_secondary"
         android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/availableStockTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_toRightOf="@id/productCategory"
+        android:layout_alignBaseline="@id/productCategory"
+        android:text="| Available Stocks: 0"
+        android:textSize="16sp"
+        android:textColor="@color/design_default_color_on_secondary" />
+
     <!-- Quantity adjustment Section -->
     <LinearLayout
         android:id="@+id/quantityAdjustmentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/productCategory"
+        android:layout_below="@id/availableStockTextView"
         android:layout_marginTop="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">

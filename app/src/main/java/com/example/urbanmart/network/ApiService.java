@@ -244,6 +244,22 @@ public class ApiService {
         client.newCall(request).enqueue(callback);
     }
 
+    /**
+     * Fetch the inventory details for a specific product.
+     *
+     * @param productId The ID of the product whose inventory should be fetched.
+     * @param callback  Callback to handle response or failure.
+     */
+    public void fetchProductInventory(String productId, Callback callback) {
+        Request request = new Request.Builder()
+                .url(BASE_URL + "ProductInventory/product/" + productId)
+                .get()
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
     // Inner class for login request
     static class UserLoginRequest {
         String email;

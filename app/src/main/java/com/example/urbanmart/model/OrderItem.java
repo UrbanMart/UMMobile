@@ -3,16 +3,20 @@ package com.example.urbanmart.model;
 public class OrderItem {
     private String productId;
     private String productName;
+    private  String vendorId;
+    private  String status;
     private int quantity;
     private double unitPrice;
     private double totalPrice;
 
-    public OrderItem(String productId, String productName, int quantity, double unitPrice, double totalPrice) {
+    public OrderItem(String productId, String productName,String vendorId, int quantity, double unitPrice, double totalPrice,String status) {
         this.productId = productId;
         this.productName = productName;
+        this.vendorId = vendorId;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.totalPrice = totalPrice;
+        this.status = status;
     }
 
     // Getters

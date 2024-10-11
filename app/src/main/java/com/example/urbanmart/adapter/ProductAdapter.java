@@ -51,6 +51,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             intent.putExtra("product_image", product.getImageUrl());
             intent.putExtra("product_category", product.getCategory());
             intent.putExtra("product_vendorid", product.getVendorId());
+            intent.putExtra("available_quantity", product.getAvailableQuantity()); // Pass available quantity
             holder.itemView.getContext().startActivity(intent);
         });
     }

@@ -45,7 +45,7 @@ import okhttp3.Response;
 public class ProductDetailActivity extends AppCompatActivity {
 
     private ImageView productImage;
-    private TextView productName, productPrice, productCategory, quantityTextView;
+    private TextView productName, productPrice, productCategory, quantityTextView, availableStockTextView;
     private Button addToCartButton, increaseQuantityButton, decreaseQuantityButton;
     private Button submitFeedbackButton;
     private EditText feedbackCommentEditText;
@@ -53,7 +53,9 @@ public class ProductDetailActivity extends AppCompatActivity {
     private RecyclerView feedbackRecyclerView;
 
     private int quantity = 1; // Default quantity
+    private int availableQuantity; // Holds the available quantity from the inventory
     private String customerId;
+    private String productId;
     private List<Feedback> feedbackList = new ArrayList<>();
     private FeedbackAdapter feedbackAdapter;
     private String vendorId; // Added for feedback submission
@@ -78,6 +80,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         productPrice = findViewById(R.id.productPrice);
         productCategory = findViewById(R.id.productCategory);
         quantityTextView = findViewById(R.id.quantityTextView);
+        availableStockTextView = findViewById(R.id.availableStockTextView);
         addToCartButton = findViewById(R.id.addToCartButton);
         increaseQuantityButton = findViewById(R.id.increaseQuantityButton);
         decreaseQuantityButton = findViewById(R.id.decreaseQuantityButton);
@@ -94,12 +97,15 @@ public class ProductDetailActivity extends AppCompatActivity {
         feedbackRecyclerView.setAdapter(feedbackAdapter);
 
         // Get the product details from the intent
+        productId = getIntent().getStringExtra("product_id");
         String name = getIntent().getStringExtra("product_name");
         double price = getIntent().getDoubleExtra("product_price", 0);
         String imageUrl = getIntent().getStringExtra("product_image");
         String category = getIntent().getStringExtra("product_category");
-        vendorId = getIntent().getStringExtra("product_vendorid"); // Save vendorId for feedback submission
+        vendorId = getIntent().getStringExtra("product_vendorid");
+        availableQuantity = getIntent().getIntExtra("available_quantity", 0); // Get available quantity
 
+        availableStockTextView.setText("| Available Stocks: " + availableQuantity);
         // Set product details to views
         productName.setText(name);
         productPrice.setText(String.format("LKR %.2f", price));
@@ -117,8 +123,12 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         // Set up quantity adjustment buttons
         increaseQuantityButton.setOnClickListener(v -> {
-            quantity++;
-            quantityTextView.setText(String.valueOf(quantity));
+            if (quantity < availableQuantity) { // Ensure we don't exceed available quantity
+                quantity++;
+                quantityTextView.setText(String.valueOf(quantity));
+            } else {
+                Toast.makeText(ProductDetailActivity.this, "Cannot exceed available stock!", Toast.LENGTH_SHORT).show();
+            }
         });
 
         decreaseQuantityButton.setOnClickListener(v -> {
@@ -129,23 +139,28 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
 
         addToCartButton.setOnClickListener(v -> {
-            // Create a new product object with the selected quantity
-            Product product = new Product(
-                    getIntent().getStringExtra("product_id"),
-                    name,
-                    price * quantity,
-                    category,
-                    imageUrl
-            );
+            if (quantity <= availableQuantity) {
+                // Create a new product object with the selected quantity
+                Product product = new Product(
+                        productId,
+                        name,
+                        price * quantity,
+                        category,
+                        imageUrl,
+                        vendorId
+                );
 
-            // Add the product to the cart and navigate to the cart
-            addToCart(product);
-            Toast.makeText(this, "Product added to cart!", Toast.LENGTH_SHORT).show();
+                // Add the product to the cart and navigate to the cart
+                addToCart(product);
+                Toast.makeText(this, "Product added to cart!", Toast.LENGTH_SHORT).show();
 
-            // Start CartActivity
-            Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
-            startActivity(intent);
-            finish(); // Optionally, finish this activity if you don't want to return here
+                // Start CartActivity
+                Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
+                startActivity(intent);
+                finish(); // Optionally, finish this activity if you don't want to return here
+            } else {
+                Toast.makeText(this, "Not enough stock to add to cart!", Toast.LENGTH_SHORT).show();
+            }
         });
 
         // Set up feedback submission

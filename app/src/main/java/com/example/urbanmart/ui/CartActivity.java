@@ -91,7 +91,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartT
 
         List<OrderItem> orderItems = new ArrayList<>();
         for (Product product : cart) {
-            orderItems.add(new OrderItem(product.getId(), product.getName(), product.getQuantity(), product.getPrice()/ product.getQuantity(), product.getPrice()));
+            orderItems.add(new OrderItem(product.getId(), product.getName(), product.getVendorId(), product.getQuantity(), product.getPrice()/ product.getQuantity(), product.getPrice(),"Created"));
         }
 
         String orderDate = null;
