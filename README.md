@@ -1,4 +1,4 @@
-# UrbanMart Mobile App
+# UrbanMart E-Commerce Mobile App
 
 UrbanMart is a mobile e-commerce platform that allows users to browse, search, and purchase furniture products seamlessly. It features secure checkout, intuitive navigation, and a modern UI with a sleek design. The mobile app is built with Java, while the backend is developed using .NET Core and MongoDB, hosted in Azure.
 
