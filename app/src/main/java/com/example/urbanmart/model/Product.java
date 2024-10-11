@@ -7,17 +7,17 @@ public class Product {
     private String category;
     private String imageUrl;
     private String vendorId;
-
     private int quantity;
+    private int availableQuantity;
 
-
-    public Product(String id, String name, double price, String category, String imageUrl) {
+    public Product(String id, String name, double price, String category, String imageUrl, String vendorId) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
         this.imageUrl = imageUrl;
         this.quantity = 1;
+        this.vendorId = vendorId;
     }
 
     // Getters and setters
@@ -28,6 +28,7 @@ public class Product {
     public void setVendorId(String vendorId) { this.vendorId = vendorId; }
 
     public String getName() { return name; }
+    public int getAvailableQuantity() { return availableQuantity; }
     public void setName(String name) { this.name = name; }
 
     public double getPrice() { return price; }
@@ -40,4 +41,5 @@ public class Product {
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
+    public void setAvailableQuantity(int availableQuantity) { this.availableQuantity = availableQuantity; }
 }
