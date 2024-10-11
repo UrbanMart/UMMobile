@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +19,8 @@ import com.example.urbanmart.adapter.ProductAdapter;
 import com.example.urbanmart.model.Product;
 import com.example.urbanmart.network.ApiService;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -102,10 +105,36 @@ public class HomeActivity extends AppCompatActivity {
                     Product[] products = gson.fromJson(responseBody, Product[].class);
                     productList = Arrays.asList(products); // Save original product list
 
+                    // Fetch available quantity for each product
+                    for (Product product : productList) {
+                        fetchProductInventory(product); // Fetch inventory for each product
+                    }
+
                     runOnUiThread(() -> {
                         ProductAdapter adapter = new ProductAdapter(productList);
                         productRecyclerView.setAdapter(adapter);
                     });
+                }
+            }
+        });
+    }
+
+    private void fetchProductInventory(Product product) {
+        apiService.fetchProductInventory(product.getId(), new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("Product Inventory", "Failed to fetch inventory for " + product.getId(), e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful() && response.body() != null) {
+                    String responseBody = response.body().string();
+                    JsonObject jsonObject = JsonParser.parseString(responseBody).getAsJsonObject();
+                    int availableQuantity = jsonObject.get("quantity").getAsInt();
+                    product.setAvailableQuantity(availableQuantity); // Set available quantity
+                } else {
+                    Log.e("Product Inventory", "Failed to get quantity for " + product.getId());
                 }
             }
         });
